@@ -1,0 +1,19 @@
+
+:root{
+    --accordion-background-color: rgba(134, 130, 130, 0.233);
+}
+
+.accordion-button::after {
+    margin: 0 auto  0 0 !important;
+    color: brown !important;
+} 
+
+
+.accordion-button .collapsed{
+    background-color: var(--accordion-background-color)!important;
+}
+
+.accordion-button:not(.collapsed){
+    background-color: var(--accordion-background-color)!important;
+}
+

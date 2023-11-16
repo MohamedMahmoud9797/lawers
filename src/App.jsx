@@ -1,11 +1,10 @@
 import "./App.css";
-import AccordionCopmonent from "./Components/Accordion";
+import AccordionCopmonent from "./Components/accordion/Accordion.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <>
-      <h1>Lawers</h1>
       <AccordionCopmonent />
     </>
   );
