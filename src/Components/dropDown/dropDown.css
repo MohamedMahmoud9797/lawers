@@ -1,0 +1,6 @@
+.custom-btn{
+    border: none !important;
+}
+.dropdown-toggle::after{
+    display: none !important;
+}

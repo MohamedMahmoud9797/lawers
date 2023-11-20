@@ -1,13 +1,21 @@
+
+
+.react-datepicker__month-container {
+    float: left;
+    background-color: #2d9596 ;
+    
+}
+
+
 .react-datepicker__day--selected {
-  background-color: #6500d8;
-  color: rgb(190, 21, 21);
+  background-color: #000
 }
 .react-datepicker__header {
   background-color: #f0f0f0;
 }
 .react-datepicker__current-month,
 .react-datepicker__current-day {
-  color: #3273dc;
+  color: #2d9596
 }
 
 .react-datepicker-wrapper {

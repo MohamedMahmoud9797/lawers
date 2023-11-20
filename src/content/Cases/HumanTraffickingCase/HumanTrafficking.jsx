@@ -1,13 +1,13 @@
-import "./shelter.css";
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Datepickerr from "../../../Components/datepicker/Datepickerr";
-const Shelter = () => {
+const HumanTrafficking = () => {
   return (
     <>
-      <Row className="align-items-center text-end  mb-2 ">
+
+<Row className="align-items-center text-end  mb-2 ">
         <Col md={6}>
-          <Form.Label>اسم المأوي </Form.Label>
+          <Form.Label>الاجراء المتخذ من وحدة الاتجار  في البشر </Form.Label>
 
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Select
@@ -28,7 +28,7 @@ const Shelter = () => {
         </Col>
       </Row>
     </>
-  );
-};
+  )
+}
 
-export default Shelter;
+export default HumanTrafficking
