@@ -11,9 +11,10 @@ const Datepickerr = () => {
       className="w-100 mt-2"
       selected={startDate}
       onChange={(date) => setStartDate(date)}
+      dateFormat="yyyy/MM/dd"
       icon={
         <svg
-          fill="#164863"
+          fill="#2D9596"
           version="1.1"
           id="Capa_1"
           xmlns="http://www.w3.org/2000/svg"
@@ -21,6 +22,7 @@ const Datepickerr = () => {
           height="217px"
           viewBox="0 0 610.40 610.40"
           stroke="#164863"
+          // eslint-disable-next-line react/no-unknown-property
         >
           <g id="SVGRepo_iconCarrier">
             {" "}

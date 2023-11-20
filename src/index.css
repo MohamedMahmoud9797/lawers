@@ -1,4 +1,30 @@
-
 :root {
   --main-color: #164863;
+}
+
+.form-select {
+  background-color: #f8f9fa;
+}
+
+
+.form-select:focus {
+    border-color: #2D9596;
+    outline: 0;
+    box-shadow: 0 0 0 0.11rem  #2D9596;
+}
+
+
+.form-check-input:checked[type=checkbox] {
+background-color: #2D9596 !important;
+border-color: #2D9596 !important;
+}
+.form-check-:checked[type=checkbox] {
+background-color: #2D9596 !important;
+border-color: #2D9596 !important;
+}
+
+.form-control:focus {
+    border-color: #2D9596;
+    outline: 0;
+    box-shadow: 0 0 0 0.11em  #2D9596;
 }

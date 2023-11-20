@@ -1,13 +1,14 @@
 import Accordion from "react-bootstrap/Accordion";
-import Body from "../../content/Body";
+import Body from "../../content/mainBody/Body";
 import "../accordion/accordion.css";
 function AccordionCopmonent() {
   const headerTitle =
     " 10-الاجراءات المتخدة من قبل المحامين العاملين لدي المركز ";
   return (
-    <Accordion defaultActiveKey="0" className="custom-accordion">
+    <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
         <Accordion.Header>{headerTitle} </Accordion.Header>
+        <div className="line"></div>
         <Body />
       </Accordion.Item>
     </Accordion>
