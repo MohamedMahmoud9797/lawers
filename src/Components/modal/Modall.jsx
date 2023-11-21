@@ -1,28 +1,12 @@
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Modal from "react-bootstrap/Modal";
 
-function Modall() {
-  const [smShow, setSmShow] = useState(false);
-  const [lgShow, setLgShow] = useState(false);
-
+function Modall({ lgShow ,onhide}) {
   return (
     <>
-   
-      <Button onClick={() => setLgShow(true)}>Large modal</Button>
-      <Modal
-        size="sm"
-        show={smShow}
-        onHide={() => setSmShow(false)}
-        aria-labelledby="example-modal-sizes-title-sm"
-      >
-    
-        <Modal.Body>...</Modal.Body>
-      </Modal>
       <Modal
         size="lg"
         show={lgShow}
-        onHide={() => setLgShow(false)}
+        onHide={onhide}
         aria-labelledby="example-modal-sizes-title-lg"
       >
         <Modal.Header closeButton>
