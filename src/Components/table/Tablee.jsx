@@ -10,14 +10,18 @@ const Tablee = () => {
   const [lgShow, setLgShow] = useState(false);
   const openModal = () => {
     setLgShow(true);
-
   };
   const onhide = () => {
     setLgShow(false);
-  }
-
- 
-
+  };
+  const tableRow = [
+    <>
+      <td>ss</td>
+      <td>ss</td>
+      <td>ss</td>
+      <td> ss</td>
+    </>,
+  ];
   return (
     <>
       <table className="table    text-end">
@@ -33,10 +37,7 @@ const Tablee = () => {
         </thead>
         <tbody>
           <tr>
-            <td>ss</td>
-            <td></td>
-            <td></td>
-            <td> </td>
+            {tableRow}
             <td>
               <button
                 type="button"
@@ -59,11 +60,9 @@ const Tablee = () => {
             </td>
           </tr>
         </tbody>
-
       </table>
       <Paginationn />
-      <Modall lgShow={lgShow} onhide={onhide}   />
-
+      <Modall lgShow={lgShow} onhide={onhide} />
     </>
   );
 };

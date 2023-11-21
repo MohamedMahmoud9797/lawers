@@ -6,7 +6,7 @@ import Judgment from "../Cases/judgmentCase/Judgment";
 import Reschedule from "../Cases/rescheduleCase/Reschedule.jsx";
 import Mediation from "../Cases/mediation/Mediation";
 import Security from "./../Cases/securityCase/Security";
-import HumanTrafficking from './../Cases/HumanTraffickingCase/HumanTrafficking';
+import HumanTrafficking from "./../Cases/HumanTraffickingCase/HumanTrafficking";
 
 function Body() {
   const textAreaTitle = "تفاصيل الاجراء ";
@@ -61,7 +61,9 @@ function Body() {
         {selectedOption === "تأجيل الجلسة" && <Reschedule />}
         {selectedOption === "وساطة" && <Mediation />}
         {selectedOption === "التحقيق الامني" && <Security />}
-        {selectedOption === "احالة الي وحدة الاتجار بالبشر" && <HumanTrafficking />}
+        {selectedOption === "احالة الي وحدة الاتجار بالبشر" && (
+          <HumanTrafficking />
+        )}
 
         {/* text area */}
         <Col md={12}>
@@ -78,7 +80,6 @@ function Body() {
         </Col>
       </Form>
     </Accordion.Body>
-    
   );
 }
 
