@@ -20,17 +20,22 @@ function Modall({ lgShow, onhide }) {
         onHide={onhide}
         aria-labelledby="example-modal-sizes-title-lg"
         onClick={handleBackdropClick}
+        dialogClassName="custom-modal"
+        dir="rtl"
       >
-        <Modal.Title id="example-modal-sizes-title-lg" dir="rtl">
-          تعديل الاجراء
+        <Modal.Title
+          id="example-modal-sizes-title-lg"
+          className="bg-danger p-3"
+        >
+          تفاصيل الاجراء
         </Modal.Title>
         <Modal.Header
           closeButton
           onClick={(e) => handleClose(e)}
-          className="justify-content-between bg-danger"
         ></Modal.Header>
+
         <Modal.Body>
-          <Body className="h-100 bg-black" />
+          <Body />
         </Modal.Body>
       </Modal>
     </>

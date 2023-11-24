@@ -9,7 +9,9 @@ function AccordionCopmonent() {
       <Accordion.Item eventKey="0">
         <Accordion.Header>{headerTitle} </Accordion.Header>
         <div className="line"></div>
-        <Body />
+        <Accordion.Body dir="rtl" className="custom-accordion ">
+          <Body />
+        </Accordion.Body>
       </Accordion.Item>
     </Accordion>
   );

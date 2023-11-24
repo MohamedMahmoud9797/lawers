@@ -47,7 +47,7 @@ const Tablee = () => {
                 onClick={() => openModal()}
               >
                 <FontAwesomeIcon icon={faEye} />
-              </button>{" "}
+              </button>
               <button
                 type="button"
                 className="btn btn-transparent"
