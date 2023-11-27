@@ -7,30 +7,29 @@ import Reschedule from "../Cases/rescheduleCase/Reschedule.jsx";
 import Mediation from "../Cases/mediation/Mediation";
 import Security from "./../Cases/securityCase/Security";
 import HumanTrafficking from "./../Cases/HumanTraffickingCase/HumanTrafficking";
+import { useDispatch, useSelector } from "react-redux";
+import { setFormData } from "../../Api/Store/proceduers.slice.js";
 
 // eslint-disable-next-line react/prop-types
 function Body({ isInputDisabled }) {
   const textAreaTitle = "تفاصيل الاجراء ";
-  const [selectedOption, setSelectedOption] = useState("default");
-  const [textAreaValue, setTextAreaValue] = useState("");
-  const [submittedFormData, setSubmittedFormData] = useState(null); // State to hold submitted form data
-  const onsubmit = (e) => {
-    e.preventDefault();
-    const formData = {
-      selectedOption: selectedOption,
-      textAreaValue: textAreaValue,
-    };
-    setSubmittedFormData(formData); // Set the submitted form data
-    // Any other action you might need on form submission
-    console.log(submittedFormData);
-  };
-  const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
+  const [ProcedureNameAr, setProcedureNameAr] = useState("default");
+  const dispatch = useDispatch();
 
-  const handelTextAreaChange = (e) => {
-    setTextAreaValue(e.target.value);
-  };
+
+  const {formData}= useSelector(state=>state.proceduers)
+  console.log(formData);
+
+const handelInputChange = ( e ) => {
+  const {  name  , value , id } = e.target;
+  setProcedureNameAr(value);
+  dispatch(setFormData({ [name]: value , [id]:0 }));
+console.log(formData);
+
+ }
+
+
+
 
   const options = [
     "قرار الحكم",
@@ -40,7 +39,7 @@ function Body({ isInputDisabled }) {
     "تأجيل الجلسة",
   ];
   return (
-    <Form onSubmit={onsubmit}>
+    <Form >
       {/* option select  */}
       <Row className="align-items-center text-end  mb-2">
         <Form.Label>الاجراء المتخذ</Form.Label>
@@ -49,13 +48,14 @@ function Body({ isInputDisabled }) {
             <Form.Select
               aria-label="Default select example"
               className="form-select"
-              onChange={handleSelectChange}
-              value={selectedOption}
+              value={ProcedureNameAr}
               disabled={isInputDisabled}
+              onChange={handelInputChange}
+              name="ProcedureNameAr"
             >
               <option>اختر </option>
               {options.map((option) => (
-                <option key={option} value={option}>
+                <option key={option} value={option} id={option}>
                   {option}
                 </option>
               ))}
@@ -73,11 +73,11 @@ function Body({ isInputDisabled }) {
         </Col>
       </Row>
       {/* cases ui  */}
-      {selectedOption === "قرار الحكم" && <Judgment />}
-      {selectedOption === "تأجيل الجلسة" && <Reschedule />}
-      {selectedOption === "وساطة" && <Mediation />}
-      {selectedOption === "التحقيق الامني" && <Security />}
-      {selectedOption === "احالة الي وحدة الاتجار بالبشر" && (
+      {ProcedureNameAr === "قرار الحكم" && <Judgment />}
+      {ProcedureNameAr === "تأجيل الجلسة" && <Reschedule />}
+      {ProcedureNameAr === "وساطة" && <Mediation />}
+      {ProcedureNameAr === "التحقيق الامني" && <Security />}
+      {ProcedureNameAr === "احالة الي وحدة الاتجار بالبشر" && (
         <HumanTrafficking />
       )}
 
@@ -92,9 +92,9 @@ function Body({ isInputDisabled }) {
             as="textarea"
             rows={5}
             className="mb-2"
-            onChange={handelTextAreaChange}
+       
           />
-          <Button variant="outline-primary px-4" className="save-btn">
+          <Button variant="outline-primary px-4" className="save-btn" onClick={onsubmit}>
             حفظ الاجراء
           </Button>
         </Form.Group>

@@ -1,0 +1,92 @@
+{
+    "Id": 0,
+    "CaseId": 0,
+    "ProcedureNameAr": "string",
+    "ProcedureNameEn": "string",
+    "ProcedureName": "string",
+    "ProcedureId": 0,
+    "ProcedureDate": "2023-11-25T17:33:37.896Z",
+    "ProcedureDateString": "string",
+    "Note": "string",
+    "IsBefore": true,
+    "ProcedureJudgement": {
+      "Id": 0,
+      "CaseCourtProcedureId": 0,
+      "JudgementId": 0,
+      "OtherJudgement": "string",
+      "Date": "2023-11-25T17:33:37.896Z",
+      "Summary": "string",
+      "Deleted": true,
+      "Created": "2023-11-25T17:33:37.896Z",
+      "CreatedBy": 0,
+      "ModifiedBy": 0,
+      "Modified": "2023-11-25T17:33:37.896Z"
+    },
+    "ProcedureReschedule": {
+      "Id": 0,
+      "CaseCourtProcedureId": 0,
+      "ReasonId": 0,
+      "OtherReason": "string",
+      "Deleted": true,
+      "Created": "2023-11-25T17:33:37.896Z",
+      "CreatedBy": 0,
+      "ModifiedBy": 0,
+      "Modified": "2023-11-25T17:33:37.896Z"
+    },
+    "HumanTrafficking": {
+      "Id": 0,
+      "CaseProcedureId": 0,
+      "ActionId": 0,
+      "Deleted": true,
+      "Created": "2023-11-25T17:33:37.896Z",
+      "CreatedBy": 0,
+      "ModifiedBy": 0,
+      "Modified": "2023-11-25T17:33:37.896Z"
+    },
+    "Mediation": {
+      "Id": 0,
+      "CaseProcedureId": 0,
+      "IsAcceptedId": 0,
+      "IsSettlementSuccessed": true,
+      "Deleted": true,
+      "Created": "2023-11-25T17:33:37.896Z",
+      "CreatedBy": 0,
+      "ModifiedBy": 0,
+      "Modified": "2023-11-25T17:33:37.896Z"
+    },
+    "ReferralToOfficialAuthority": {
+      "Id": 0,
+      "CaseProcedureId": 0,
+      "OfficialAuthorityId": 0,
+      "OtherOfficialAuthority": "string",
+      "Deleted": true,
+      "Created": "2023-11-25T17:33:37.896Z",
+      "CreatedBy": 0,
+      "ModifiedBy": 0,
+      "Modified": "2023-11-25T17:33:37.896Z"
+    },
+    "ReferralToShelter": {
+      "Id": 0,
+      "CaseProcedureId": 0,
+      "ShelterId": 0,
+      "Deleted": true,
+      "Created": "2023-11-25T17:33:37.896Z",
+      "CreatedBy": 0,
+      "ModifiedBy": 0,
+      "Modified": "2023-11-25T17:33:37.896Z"
+    },
+    "SecurityCheck": {
+      "Id": 0,
+      "CaseProcedureId": 0,
+      "CheckResultId": 0,
+      "OtherResult": "string",
+      "Deleted": true,
+      "Created": "2023-11-25T17:33:37.896Z",
+      "CreatedBy": 0,
+      "ModifiedBy": 0,
+      "Modified": "2023-11-25T17:33:37.896Z"
+    }
+  }
+
+
+  

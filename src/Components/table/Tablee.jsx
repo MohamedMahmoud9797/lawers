@@ -7,6 +7,12 @@ import Modall from "./../modal/Modall";
 import { useState } from "react";
 
 const Tablee = () => {
+
+  const data = [{
+    proceduer: "ss",
+    proceduer2:["sxxs","sxxs"],
+    proceduer3: "ss",
+  }]
   const [lgShow, setLgShow] = useState(false);
   const openModal = () => {
     setLgShow(true);
@@ -14,14 +20,13 @@ const Tablee = () => {
   const onhide = () => {
     setLgShow(false);
   };
-  const tableRow = [
+  const tableRow = data.map((data) =>
     <>
-      <td>ss</td>
-      <td>ss</td>
-      <td>ss</td>
-      <td> ss</td>
-    </>,
-  ];
+      <td>{data.proceduer}</td>
+      <td>{data.proceduer2}</td>
+ 
+    </>)
+  
   return (
     <>
       <table className="table    text-end">
