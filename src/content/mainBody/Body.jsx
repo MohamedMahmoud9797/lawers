@@ -7,40 +7,48 @@ import Reschedule from "../Cases/rescheduleCase/Reschedule.jsx";
 import Mediation from "../Cases/mediation/Mediation";
 import Security from "./../Cases/securityCase/Security";
 import HumanTrafficking from "./../Cases/HumanTraffickingCase/HumanTrafficking";
+import { useDispatch, useSelector } from "react-redux";
+import { getProcedures } from "./../../Api/Store/proceduers.slice";
 
 // eslint-disable-next-line react/prop-types
 function Body({ isInputDisabled }) {
-  const textAreaTitle = "تفاصيل الاجراء ";
-  const [selectedOption, setSelectedOption] = useState("default");
-  const [textAreaValue, setTextAreaValue] = useState("");
-  const [submittedFormData, setSubmittedFormData] = useState(null); // State to hold submitted form data
-  const onsubmit = (e) => {
-    e.preventDefault();
-    const formData = {
-      selectedOption: selectedOption,
-      textAreaValue: textAreaValue,
-    };
-    setSubmittedFormData(formData); // Set the submitted form data
-    // Any other action you might need on form submission
-    console.log(submittedFormData);
-  };
+  const textAreaTitle = "تفاصيل الاجراء";
+  const [selectValue, setSelectValue] = useState("");
+  const [formData, setFormData] = useState({});
+
   const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
+    setSelectValue(e.target.value);
   };
 
-  const handelTextAreaChange = (e) => {
-    setTextAreaValue(e.target.value);
+  const handleSaveAction = () => {
+    // Handle save action here
+    console.log("Form Data:", formData);
   };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProcedures());
+  }, [dispatch]);
+  const { values } = useSelector((state) => state.proceduers);
+  const options = values;
 
-  const options = [
-    "قرار الحكم",
-    "وساطة",
-    "التحقيق الامني",
-    "احالة الي وحدة الاتجار بالبشر",
-    "تأجيل الجلسة",
-  ];
+  let renderedComponent;
+
+  if (selectValue === "صدر قرار حكم") {
+    renderedComponent = <Judgment updateFormValues={setFormData} />;
+  } else if (selectValue === "وساطة") {
+    renderedComponent = <Mediation updateFormValues={setFormData} />;
+  } else if (selectValue === "التحقيق الامني") {
+    renderedComponent = <Security updateFormValues={setFormData} />;
+  } else if (selectValue === "احالة الي وحدة الاتجار بالبشر") {
+    renderedComponent = <HumanTrafficking updateFormValues={setFormData} />;
+  } else if (selectValue === "تأجيل الجلسة ") {
+    renderedComponent = <Reschedule updateFormValues={setFormData} />;
+  } else {
+    renderedComponent = null; // Default to null if selectValue doesn't match any case
+  }
+
   return (
-    <Form onSubmit={onsubmit}>
+    <Form>
       {/* option select  */}
       <Row className="align-items-center text-end  mb-2">
         <Form.Label>الاجراء المتخذ</Form.Label>
@@ -50,15 +58,14 @@ function Body({ isInputDisabled }) {
               aria-label="Default select example"
               className="form-select"
               onChange={handleSelectChange}
-              value={selectedOption}
               disabled={isInputDisabled}
+              value={selectValue}
             >
               <option>اختر </option>
-              {options.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
+              {options &&
+                options.map((option) => (
+                  <option key={option.Id}>{option.NameAr}</option>
+                ))}
             </Form.Select>
           </Form.Group>
         </Col>
@@ -73,14 +80,7 @@ function Body({ isInputDisabled }) {
         </Col>
       </Row>
       {/* cases ui  */}
-      {selectedOption === "قرار الحكم" && <Judgment />}
-      {selectedOption === "تأجيل الجلسة" && <Reschedule />}
-      {selectedOption === "وساطة" && <Mediation />}
-      {selectedOption === "التحقيق الامني" && <Security />}
-      {selectedOption === "احالة الي وحدة الاتجار بالبشر" && (
-        <HumanTrafficking />
-      )}
-
+      {renderedComponent}
       {/* text area */}
       <Col md={12}>
         <Form.Group
@@ -92,9 +92,16 @@ function Body({ isInputDisabled }) {
             as="textarea"
             rows={5}
             className="mb-2"
-            onChange={handelTextAreaChange}
+            value={formData.details || ""}
+            onChange={(e) =>
+              setFormData({ ...formData, details: e.target.value })
+            }
           />
-          <Button variant="outline-primary px-4" className="save-btn">
+          <Button
+            variant="outline-primary px-4"
+            className="save-btn"
+            onClick={handleSaveAction}
+          >
             حفظ الاجراء
           </Button>
         </Form.Group>
