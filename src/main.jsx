@@ -1,10 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from 'react-dom'
 import App from "./App.jsx";
 import "./index.css";
+import { Provider } from "react-redux";
+import { store } from './Api/Store/store.js';
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+
+// eslint-disable-next-line react/no-deprecated
+ReactDOM.render(
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
-);
+  </Provider>,
+  document.getElementById('root')
+)
