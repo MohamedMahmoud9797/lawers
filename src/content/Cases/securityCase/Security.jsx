@@ -1,8 +1,15 @@
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Datepickerr from "../../../Components/datepicker/Datepickerr";
+import { useState } from "react";
 
-const Security = () => {
+const Security = (updateFormValues) => {
+  const [value1, setValue1] = useState('');
+  const handleInputChange = (e) => {
+    setValue1(e.target.value);
+    updateFormValues({ value1: e.target.value });
+  };
+
   return (
     <>
       <Row className="align-items-center text-end  mb-2 ">
@@ -13,6 +20,8 @@ const Security = () => {
             <Form.Select
               aria-label="Default select example"
               className="form-select"
+              onChange={handleInputChange}
+              value={value1}
             >
               <option>اختر </option>
               <option value="1">سس</option>

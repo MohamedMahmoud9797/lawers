@@ -20,9 +20,7 @@ export const getProcedures = createAsyncThunk(
       const data = await res.json();
       return data.Data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.message || "Failed to fetch procedures"
-      );
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );

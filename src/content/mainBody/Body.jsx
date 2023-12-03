@@ -8,28 +8,39 @@ import Mediation from "../Cases/mediation/Mediation";
 import Security from "./../Cases/securityCase/Security";
 import HumanTrafficking from "./../Cases/HumanTraffickingCase/HumanTrafficking";
 import { useDispatch, useSelector } from "react-redux";
-import { getProcedures } from "./../../Api/Store/proceduers.slice";
+import { getProcedures } from "../../Api/Store/proceduers.slice.js";
 
 // eslint-disable-next-line react/prop-types
 function Body({ isInputDisabled }) {
   const textAreaTitle = "تفاصيل الاجراء";
   const [selectValue, setSelectValue] = useState("");
   const [formData, setFormData] = useState({});
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProcedures());
+  }, [dispatch]);
+
+  
+  const { values } = useSelector((state) => state.proceduers);
+  const options = values;
+  console.log(values);
 
   const handleSelectChange = (e) => {
     setSelectValue(e.target.value);
   };
 
-  const handleSaveAction = () => {
-    // Handle save action here
-    console.log("Form Data:", formData);
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here, you can send formData to the API
+    console.log('Data to be sent:', formData);
+   // eslint-disable-next-line no-undef
+   updateFormValues(formData);
   };
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getProcedures());
-  }, [dispatch]);
-  const { values } = useSelector((state) => state.proceduers);
-  const options = values;
+
+
 
   let renderedComponent;
 
@@ -41,10 +52,11 @@ function Body({ isInputDisabled }) {
     renderedComponent = <Security updateFormValues={setFormData} />;
   } else if (selectValue === "احالة الي وحدة الاتجار بالبشر") {
     renderedComponent = <HumanTrafficking updateFormValues={setFormData} />;
-  } else if (selectValue === "تأجيل الجلسة ") {
+  } else if (selectValue === "تأجيل الجلسة") {
     renderedComponent = <Reschedule updateFormValues={setFormData} />;
   } else {
-    renderedComponent = null; // Default to null if selectValue doesn't match any case
+    renderedComponent = null; 
+  
   }
 
   return (
@@ -92,15 +104,13 @@ function Body({ isInputDisabled }) {
             as="textarea"
             rows={5}
             className="mb-2"
-            value={formData.details || ""}
-            onChange={(e) =>
-              setFormData({ ...formData, details: e.target.value })
-            }
+         
+           
           />
           <Button
             variant="outline-primary px-4"
             className="save-btn"
-            onClick={handleSaveAction}
+            onClick={handleSubmit}
           >
             حفظ الاجراء
           </Button>
