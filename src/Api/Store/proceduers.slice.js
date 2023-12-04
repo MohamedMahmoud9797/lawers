@@ -4,7 +4,8 @@ const initialState = {
   loading: false,
   error: null,
   values: [],
-  maindata: [],
+  createdDataResponse: null,
+  allCaseProcedures: [],
 };
 
 export const getProcedures = createAsyncThunk(
@@ -18,6 +19,63 @@ export const getProcedures = createAsyncThunk(
         }
       );
       const data = await res.json();
+      return data.Data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getMainData = createAsyncThunk(
+  "mainData/get",
+  async (_, thunkAPI) => {
+    try {
+      const res = await fetch("https://testapi.tamkeencases.com/GetMainData", {
+        method: "POST",
+      });
+      const data = await res.json();
+      return data.Data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const createCaseProcedure = createAsyncThunk(
+  "createCaseProcedure",
+  async (formData, thunkAPI) => {
+    try {
+      const res = await fetch(
+        "https://testapi.tamkeencases.com/CreateCaseProcedure",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      const data = await res.json();
+      console.log(data);
+      return data.Data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getAllCaseProcedures = createAsyncThunk(
+  "getAllCaseProcedures",
+  async (_, thunkAPI) => {
+    try {
+      const res = await fetch(
+        `https://testapi.tamkeencases.com/GetAllCaseProcedures?skip=${10}&take=${2}`,
+        {
+          method: "POST",
+        }
+      );
+      const data = await res.json();
+      console.log(data.Data);
       return data.Data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -43,6 +101,46 @@ const proceduerSlice = createSlice({
     [getProcedures.pending]: (state) => {
       state.loading = true;
     },
+
+    // get main data
+
+    [getMainData.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.mainData = action.payload;
+    },
+    [getMainData.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [getMainData.pending]: (state) => {
+      state.loading = true;
+    },
+
+    // create case procedure
+    [createCaseProcedure.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.createdDataResponse = action.payload;
+    },
+    [createCaseProcedure.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [createCaseProcedure.pending]: (state) => {
+      state.loading = true;
+    },
+  },
+
+  // get all case procedures
+  [getAllCaseProcedures.fulfilled]: (state, action) => {
+    state.loading = false;
+    state.allCaseProcedures = action.payload;
+  },
+  [getAllCaseProcedures.rejected]: (state, action) => {
+    state.loading = false;
+    state.error = action.payload;
+  },
+  [getAllCaseProcedures.pending]: (state) => {
+    state.loading = true;
   },
 });
 
