@@ -69,7 +69,7 @@ export const getAllCaseProcedures = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const res = await fetch(
-        `https://testapi.tamkeencases.com/GetAllCaseProcedures?skip=${10}&take=${2}`,
+        `https://testapi.tamkeencases.com/GetAllCaseProcedures?skip=${0}&take=${10}`,
         {
           method: "POST",
         }
@@ -129,21 +129,19 @@ const proceduerSlice = createSlice({
       state.loading = true;
     },
 
-     // get all case procedures
-  [getAllCaseProcedures.fulfilled]: (state, action) => {
-    state.loading = false;
-    state.allCaseProcedures = action.payload;
+    // get all case procedures
+    [getAllCaseProcedures.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.allCaseProcedures = action.payload;
+    },
+    [getAllCaseProcedures.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [getAllCaseProcedures.pending]: (state) => {
+      state.loading = true;
+    },
   },
-  [getAllCaseProcedures.rejected]: (state, action) => {
-    state.loading = false;
-    state.error = action.payload;
-  },
-  [getAllCaseProcedures.pending]: (state) => {
-    state.loading = true;
-  },
-  },
-
- 
 });
 
 export default proceduerSlice.reducer;
