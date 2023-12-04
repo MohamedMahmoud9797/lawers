@@ -8,7 +8,11 @@ import Mediation from "../Cases/mediation/Mediation";
 import Security from "./../Cases/securityCase/Security";
 import HumanTrafficking from "./../Cases/HumanTraffickingCase/HumanTrafficking";
 import { useDispatch, useSelector } from "react-redux";
-import { getProcedures } from "../../Api/Store/proceduers.slice.js";
+import {
+  createCaseProcedure,
+  getMainData,
+  getProcedures,
+} from "../../Api/Store/proceduers.slice.js";
 
 // eslint-disable-next-line react/prop-types
 function Body({ isInputDisabled }) {
@@ -19,44 +23,47 @@ function Body({ isInputDisabled }) {
 
   useEffect(() => {
     dispatch(getProcedures());
+    dispatch(getMainData());
   }, [dispatch]);
 
-  
   const { values } = useSelector((state) => state.proceduers);
   const options = values;
-  console.log(values);
 
   const handleSelectChange = (e) => {
     setSelectValue(e.target.value);
   };
 
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // Here, you can send formData to the API
-    console.log('Data to be sent:', formData);
-   // eslint-disable-next-line no-undef
-   updateFormValues(formData);
+    console.log("Data to be sent:", formData);
+    // eslint-disable-next-line no-undef
+    updateFormValues(formData);
+    dispatch(createCaseProcedure(formData));
   };
-
-
+  const updateFormValues = (data) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      ...data,
+    }));
+  };
 
   let renderedComponent;
 
   if (selectValue === "صدر قرار حكم") {
-    renderedComponent = <Judgment updateFormValues={setFormData} />;
+    renderedComponent = <Judgment updateFormValues={updateFormValues} />;
   } else if (selectValue === "وساطة") {
-    renderedComponent = <Mediation updateFormValues={setFormData} />;
+    renderedComponent = <Mediation updateFormValues={updateFormValues} />;
   } else if (selectValue === "التحقيق الامني") {
-    renderedComponent = <Security updateFormValues={setFormData} />;
+    renderedComponent = <Security updateFormValues={updateFormValues} />;
   } else if (selectValue === "احالة الي وحدة الاتجار بالبشر") {
-    renderedComponent = <HumanTrafficking updateFormValues={setFormData} />;
+    renderedComponent = (
+      <HumanTrafficking updateFormValues={updateFormValues} />
+    );
   } else if (selectValue === "تأجيل الجلسة") {
-    renderedComponent = <Reschedule updateFormValues={setFormData} />;
+    renderedComponent = <Reschedule updateFormValues={updateFormValues} />;
   } else {
-    renderedComponent = null; 
-  
+    renderedComponent = null;
   }
 
   return (
@@ -100,13 +107,7 @@ function Body({ isInputDisabled }) {
           className="text-end mb-2"
         >
           <Form.Label>{textAreaTitle}</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={5}
-            className="mb-2"
-         
-           
-          />
+          <Form.Control as="textarea" rows={5} className="mb-2" />
           <Button
             variant="outline-primary px-4"
             className="save-btn"

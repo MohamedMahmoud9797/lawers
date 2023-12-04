@@ -4,15 +4,18 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import "./table.css";
 import Paginationn from "../pagination/Paginationn";
 import Modall from "./../modal/Modall";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCaseProcedures } from "../../Api/Store/proceduers.slice";
 
 const Tablee = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllCaseProcedures());
+  }, [dispatch]);
+  const { allCaseProcedure } = useSelector((state) => state.proceduers);
 
-  const data = [{
-    proceduer: "ss",
-    proceduer2:["sxxs","sxxs"],
-    proceduer3: "ss",
-  }]
+  console.log(allCaseProcedure);
   const [lgShow, setLgShow] = useState(false);
   const openModal = () => {
     setLgShow(true);
@@ -20,13 +23,7 @@ const Tablee = () => {
   const onhide = () => {
     setLgShow(false);
   };
-  const tableRow = data.map((data) =>
-    <>
-      <td>{data.proceduer}</td>
-      <td>{data.proceduer2}</td>
- 
-    </>)
-  
+
   return (
     <>
       <table className="table    text-end">
@@ -42,7 +39,6 @@ const Tablee = () => {
         </thead>
         <tbody>
           <tr>
-            {tableRow}
             <td>
               <button
                 type="button"
