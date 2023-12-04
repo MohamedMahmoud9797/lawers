@@ -5,7 +5,7 @@ import "./table.css";
 import Paginationn from "../pagination/Paginationn";
 import Modall from "./../modal/Modall";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getAllCaseProcedures } from "../../Api/Store/proceduers.slice";
 
 const Tablee = () => {
@@ -13,9 +13,10 @@ const Tablee = () => {
   useEffect(() => {
     dispatch(getAllCaseProcedures());
   }, [dispatch]);
-  const { allCaseProcedure } = useSelector((state) => state.proceduers);
 
-  console.log(allCaseProcedure);
+  
+
+
   const [lgShow, setLgShow] = useState(false);
   const openModal = () => {
     setLgShow(true);

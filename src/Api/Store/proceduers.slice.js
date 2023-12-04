@@ -128,9 +128,8 @@ const proceduerSlice = createSlice({
     [createCaseProcedure.pending]: (state) => {
       state.loading = true;
     },
-  },
 
-  // get all case procedures
+     // get all case procedures
   [getAllCaseProcedures.fulfilled]: (state, action) => {
     state.loading = false;
     state.allCaseProcedures = action.payload;
@@ -142,6 +141,9 @@ const proceduerSlice = createSlice({
   [getAllCaseProcedures.pending]: (state) => {
     state.loading = true;
   },
+  },
+
+ 
 });
 
 export default proceduerSlice.reducer;

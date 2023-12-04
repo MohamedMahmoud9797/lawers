@@ -54,15 +54,21 @@ function Body({ isInputDisabled }) {
     renderedComponent = <Judgment updateFormValues={updateFormValues} />;
   } else if (selectValue === "وساطة") {
     renderedComponent = <Mediation updateFormValues={updateFormValues} />;
-  } else if (selectValue === "التحقيق الامني") {
+  } else if (selectValue === "التدقيق الامني") {
     renderedComponent = <Security updateFormValues={updateFormValues} />;
-  } else if (selectValue === "احالة الي وحدة الاتجار بالبشر") {
+  } else if (selectValue === "احالة الى وحدة مكافحة الاتجار بالبشر") {
     renderedComponent = (
       <HumanTrafficking updateFormValues={updateFormValues} />
     );
   } else if (selectValue === "تأجيل الجلسة") {
-    renderedComponent = <Reschedule updateFormValues={updateFormValues} />;
-  } else {
+    renderedComponent = <Reschedule updateFormValues={updateFormValues} />
+  }
+  
+  else if (selectValue === "احالة الى مأوى" ) {
+    renderedComponent = <HumanTrafficking updateFormValues={updateFormValues} />
+  }
+  
+  else {
     renderedComponent = null;
   }
 
