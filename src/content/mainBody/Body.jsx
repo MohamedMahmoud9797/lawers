@@ -47,31 +47,18 @@ function Body({ isInputDisabled }) {
       ...data,
     }));
   };
-
-  let renderedComponent;
-
-  if (selectValue === "صدر قرار حكم") {
-    renderedComponent = <Judgment updateFormValues={updateFormValues} />;
-  } else if (selectValue === "وساطة") {
-    renderedComponent = <Mediation updateFormValues={updateFormValues} />;
-  } else if (selectValue === "التدقيق الامني") {
-    renderedComponent = <Security updateFormValues={updateFormValues} />;
-  } else if (selectValue === "احالة الى وحدة مكافحة الاتجار بالبشر") {
-    renderedComponent = (
-      <HumanTrafficking updateFormValues={updateFormValues} />
-    );
-  } else if (selectValue === "تأجيل الجلسة") {
-    renderedComponent = <Reschedule updateFormValues={updateFormValues} />
-  }
+  const componentMap = {
+    "صدر قرار حكم": Judgment,
+    "وساطة": Mediation,
+    "التدقيق الامني": Security,
+    "احالة الى وحدة مكافحة الاتجار بالبشر": HumanTrafficking,
+    "تأجيل الجلسة": Reschedule,
+    "احالة الى مأوى": HumanTrafficking,
+  };
   
-  else if (selectValue === "احالة الى مأوى" ) {
-    renderedComponent = <HumanTrafficking updateFormValues={updateFormValues} />
-  }
+  const SelectedComponent = componentMap[selectValue] || null;
+  const renderedComponent = SelectedComponent && <SelectedComponent updateFormValues={updateFormValues} />;
   
-  else {
-    renderedComponent = null;
-  }
-
   return (
     <Form>
       {/* option select  */}
