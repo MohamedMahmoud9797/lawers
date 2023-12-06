@@ -26,7 +26,7 @@ function Body({ isInputDisabled }) {
     dispatch(getMainData());
   }, [dispatch]);
 
-  const { values } = useSelector((state) => state.proceduers);
+  const { values  } = useSelector((state) => state.proceduers);
   const options = values;
 
   const handleSelectChange = (e) => {
@@ -60,6 +60,7 @@ function Body({ isInputDisabled }) {
   const renderedComponent = SelectedComponent && <SelectedComponent updateFormValues={updateFormValues} />;
   
   return (
+    <>
     <Form>
       {/* option select  */}
       <Row className="align-items-center text-end  mb-2">
@@ -111,7 +112,9 @@ function Body({ isInputDisabled }) {
         </Form.Group>
       </Col>
     </Form>
+    </>
   );
+  
 }
 
 export default Body;
