@@ -7,18 +7,42 @@ import Modall from "./../modal/Modall";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCaseProcedures } from "../../Api/Store/proceduers.slice";
+import Loading from "../loading/Loading";
 
 const Tablee = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAllCaseProcedures());
-  }, [dispatch]);
+  const [viewOnlyMode, setViewOnlyMode] = useState(false);
+  const [lgShow, setLgShow] = useState(false);
 
-  const { allCaseProcedures } = useSelector((state) => state.proceduers);
+  const [selectedProcedure, setSelectedProcedure] = useState(null);
+
+  const dispatch = useDispatch();
+  const { allCaseProcedures, currentPage, loading } = useSelector(
+    (state) => state.proceduers
+  );
+  useEffect(() => {
+    dispatch(getAllCaseProcedures({ page: currentPage, take: 7 }));
+  }, [dispatch, currentPage]);
+
+  const openModal = (procedure) => {
+    setSelectedProcedure(procedure);
+    setViewOnlyMode(false); // Reset to default mode
+    setLgShow(true);
+  };
+  const openViewModal = (procedure) => {
+    setSelectedProcedure(procedure);
+    setViewOnlyMode(true);
+    setLgShow(true);
+  };
+
+  const onhide = () => {
+    setSelectedProcedure(null);
+    setLgShow(false);
+    setViewOnlyMode(false); // Reset to default mode
+  };
 
   // Create an array to hold multiple rows
-  const tableRows = allCaseProcedures.map((item, index) => (
-    <tr key={index}>
+  const tableRows = allCaseProcedures.map((item, id) => (
+    <tr key={item.Id}>
       <td>{item.ProcedureNameAr}</td>
       <td>{item.isBefore === "true" ? "نعم" : "لا"}</td>
       <td>{item.ProcedureDateString}</td>
@@ -28,10 +52,10 @@ const Tablee = () => {
           type="button"
           className="btn btn-transparent"
           data-bs-toggle="modal"
-          data-bs-target={`#exampleModal${index}`}
-          onClick={() => openModal()}
+          data-bs-target={`#exampleModal${id}`}
+          onClick={() => openModal(item)}
         >
-          <FontAwesomeIcon icon={faEye} />
+          <FontAwesomeIcon icon={faEye} onClick={() => console.log(id)} />
         </button>
       </td>
       <td>
@@ -40,7 +64,7 @@ const Tablee = () => {
           className="btn btn-transparent"
           data-bs-toggle="modal"
           data-bs-target={`#exampleModal`}
-          onClick={() => onhide()}
+          onClick={() => openViewModal(item)}
         >
           <FontAwesomeIcon icon={faPen} style={{ color: "#1f5120" }} />
         </button>
@@ -48,18 +72,9 @@ const Tablee = () => {
     </tr>
   ));
 
-  const [lgShow, setLgShow] = useState(false);
-
-  const openModal = () => {
-    setLgShow(true);
-  };
-
-  const onhide = () => {
-    setLgShow(false);
-  };
-
   return (
     <>
+      {(loading && <Loading />) || ""}
       <table className="table text-end">
         <thead>
           <tr className="table-secondary">
@@ -73,8 +88,13 @@ const Tablee = () => {
         </thead>
         <tbody>{tableRows}</tbody>
       </table>
-      <Paginationn />
-      <Modall lgShow={lgShow} onhide={onhide} />
+      <Paginationn currentPage={currentPage} />
+      <Modall
+        lgShow={lgShow}
+        onhide={onhide}
+        viewOnlyMode={viewOnlyMode}
+        selectedProcedure={selectedProcedure}
+      />
     </>
   );
 };

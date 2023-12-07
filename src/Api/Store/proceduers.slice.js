@@ -6,6 +6,7 @@ const initialState = {
   values: [],
   createdDataResponse: null,
   allCaseProcedures: [],
+  currentPage: 1,
 };
 
 export const getProcedures = createAsyncThunk(
@@ -66,10 +67,11 @@ export const createCaseProcedure = createAsyncThunk(
 
 export const getAllCaseProcedures = createAsyncThunk(
   "getAllCaseProcedures",
-  async (_, thunkAPI) => {
+  async ({ page, take }, thunkAPI) => {
     try {
+      const skip = (page - 1) * take;
       const res = await fetch(
-        `https://testapi.tamkeencases.com/GetAllCaseProcedures?skip=${0}&take=${10}`,
+        `https://testapi.tamkeencases.com/GetAllCaseProcedures?skip=${skip}&take=${take}`,
         {
           method: "POST",
         }

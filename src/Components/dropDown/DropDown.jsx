@@ -6,7 +6,10 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 const DropDownn = () => {
   return (
     <>
-      <Dropdown className="d-flex justify-content-end align-items-center  custom ">
+      <Dropdown
+        className="d-flex justify-content-end align-items-center  custom "
+        autoClose={false}
+      >
         <Dropdown.Toggle
           className="bg-light text-primary custom-btn  "
           id="dropdown-basic"

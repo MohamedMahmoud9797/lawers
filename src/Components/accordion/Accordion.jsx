@@ -1,28 +1,52 @@
 import Accordion from "react-bootstrap/Accordion";
 import Body from "../../content/mainBody/Body";
+import Withness from "../../content/witnexx/Withness.jsx";
 import "../accordion/accordion.css";
 import { useSelector } from "react-redux";
 import Loading from "../../Components/loading/Loading.jsx";
+import DropDownn from "./../dropDown/DropDown";
 
-function AccordionCopmonent() {
-  const headerTitle =
-    " 10-الاجراءات المتخدة من قبل المحامين العاملين لدي المركز ";
-    const {loading}= useSelector((state)=>state.proceduers)
+// eslint-disable-next-line react/prop-types
+function AccordionContent({ children, eventKey, headerTitle }) {
+  return (
+    <Accordion.Item eventKey={eventKey}>
+      <Accordion.Header>{headerTitle}</Accordion.Header>
+      <div className="line"></div>
+      <Accordion.Body dir="rtl" className="custom-accordion">
+        {children}
+      </Accordion.Body>
+    </Accordion.Item>
+  );
+}
+
+function AccordionComponent() {
+  const { loading } = useSelector((state) => state.proceduers);
+
   return (
     <>
-    {loading && <Loading/> ||""}
-
-    <Accordion defaultActiveKey="0">
-      <Accordion.Item eventKey="0">
-        <Accordion.Header>{headerTitle} </Accordion.Header>
-        <div className="line"></div>
-        <Accordion.Body dir="rtl" className="custom-accordion ">
+      {loading && <Loading />}
+      <Accordion defaultActiveKey="0">
+        <AccordionContent
+          eventKey="0"
+          headerTitle="  10-الاجراءات المتخدة من قبل المحامين العاملين لدي المركز"
+        >
           <Body />
-        </Accordion.Body>
-      </Accordion.Item>
-    </Accordion>
+        </AccordionContent>
+      </Accordion>
+      <DropDownn />
+
+      <div style={{ margin: "20px" }}></div>
+
+      <Accordion defaultActiveKey="1">
+        <AccordionContent
+          eventKey="1"
+          headerTitle="11-بيانات خاصة بالشهود الآخرين إن وجدوا "
+        >
+          <Withness />
+        </AccordionContent>
+      </Accordion>
     </>
   );
 }
 
-export default AccordionCopmonent;
+export default AccordionComponent;
