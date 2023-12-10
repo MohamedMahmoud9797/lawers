@@ -1,6 +1,6 @@
 import { Row, Col, Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import "./body.module.css";
+import "./body.css";
 import { useEffect, useState } from "react";
 import Judgment from "../Cases/judgmentCase/Judgment";
 import Reschedule from "../Cases/rescheduleCase/Reschedule.jsx";
@@ -15,10 +15,13 @@ import {
 } from "../../Api/Store/proceduers.slice.js";
 
 // eslint-disable-next-line react/prop-types
-function Body({ isInputDisabled }) {
+function Body({ dataToModal }) {
   const textAreaTitle = "تفاصيل الاجراء";
   const [selectValue, setSelectValue] = useState("");
+  const [textareaValue, setTextareaValue] = useState("");
   const [formData, setFormData] = useState({});
+  const [isInputDisabled, setIsInputDisabled] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,9 +62,27 @@ function Body({ isInputDisabled }) {
     "احالة الى مأوى": HumanTrafficking,
   };
 
+  useEffect(() => {
+    if (dataToModal) {
+      setIsInputDisabled(true);
+
+      // Example: Update form data based on dataToModal
+      const { ProcedureNameAr, note, date } = dataToModal;
+
+      // Update the select value
+      setSelectValue(ProcedureNameAr);
+      setTextareaValue(note);
+
+      // Update other form fields as needed
+      updateFormValues({ textarea: note });
+    }
+  }, [dataToModal]);
   const SelectedComponent = componentMap[selectValue] || null;
   const renderedComponent = SelectedComponent && (
-    <SelectedComponent updateFormValues={updateFormValues} />
+    <SelectedComponent
+      updateFormValues={updateFormValues}
+      dataToModal={dataToModal}
+    />
   );
 
   return (
@@ -111,6 +132,7 @@ function Body({ isInputDisabled }) {
               rows={5}
               className="mb-2"
               onChange={handleTextareaChange}
+              value={textareaValue}
             />
             <Button
               variant="outline-primary px-4"

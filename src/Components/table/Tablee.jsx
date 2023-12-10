@@ -6,7 +6,10 @@ import Paginationn from "../pagination/Paginationn";
 import Modall from "./../modal/Modall";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCaseProcedures } from "../../Api/Store/proceduers.slice";
+import {
+  getAllCaseProcedures,
+  getCaseProcedureById,
+} from "../../Api/Store/proceduers.slice";
 import Loading from "../loading/Loading";
 
 const Tablee = () => {
@@ -16,9 +19,8 @@ const Tablee = () => {
   const [selectedProcedure, setSelectedProcedure] = useState(null);
 
   const dispatch = useDispatch();
-  const { allCaseProcedures, currentPage, loading } = useSelector(
-    (state) => state.proceduers
-  );
+  const { allCaseProcedures, currentPage, loading, caseProcedureById } =
+    useSelector((state) => state.proceduers);
   useEffect(() => {
     dispatch(getAllCaseProcedures({ page: currentPage, take: 7 }));
   }, [dispatch, currentPage]);
@@ -26,11 +28,6 @@ const Tablee = () => {
   const openModal = (procedure) => {
     setSelectedProcedure(procedure);
     setViewOnlyMode(false); // Reset to default mode
-    setLgShow(true);
-  };
-  const openViewModal = (procedure) => {
-    setSelectedProcedure(procedure);
-    setViewOnlyMode(true);
     setLgShow(true);
   };
 
@@ -55,7 +52,10 @@ const Tablee = () => {
           data-bs-target={`#exampleModal${id}`}
           onClick={() => openModal(item)}
         >
-          <FontAwesomeIcon icon={faEye} onClick={() => console.log(id)} />
+          <FontAwesomeIcon
+            icon={faEye}
+            onClick={() => dispatch(getCaseProcedureById(item.Id))}
+          />
         </button>
       </td>
       <td>
@@ -64,7 +64,6 @@ const Tablee = () => {
           className="btn btn-transparent"
           data-bs-toggle="modal"
           data-bs-target={`#exampleModal`}
-          onClick={() => openViewModal(item)}
         >
           <FontAwesomeIcon icon={faPen} style={{ color: "#1f5120" }} />
         </button>
@@ -72,6 +71,8 @@ const Tablee = () => {
     </tr>
   ));
 
+  // cases of model
+  console.log(caseProcedureById);
   return (
     <>
       {(loading && <Loading />) || ""}
@@ -93,7 +94,8 @@ const Tablee = () => {
         lgShow={lgShow}
         onhide={onhide}
         viewOnlyMode={viewOnlyMode}
-        selectedProcedure={selectedProcedure}
+        caseProcedureById={selectedProcedure}
+        casesOfModal={caseProcedureById}
       />
     </>
   );

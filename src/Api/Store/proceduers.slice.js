@@ -7,6 +7,7 @@ const initialState = {
   createdDataResponse: null,
   allCaseProcedures: [],
   currentPage: 1,
+  caseProcedureById: [],
 };
 
 export const getProcedures = createAsyncThunk(
@@ -85,6 +86,25 @@ export const getAllCaseProcedures = createAsyncThunk(
   }
 );
 
+export const getCaseProcedureById = createAsyncThunk(
+  "getCaseProcedureById",
+  async (id, thunkAPI) => {
+    try {
+      const res = await fetch(
+        `https://testapi.tamkeencases.com/GetCaseProcedureById?id=${id}`,
+        {
+          method: "POST",
+        }
+      );
+      const data = await res.json();
+      console.log(data.Data);
+      return data.Data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const proceduerSlice = createSlice({
   name: "procedures",
   initialState,
@@ -141,6 +161,18 @@ const proceduerSlice = createSlice({
       state.error = action.payload;
     },
     [getAllCaseProcedures.pending]: (state) => {
+      state.loading = true;
+    },
+    // get case procedure by id
+    [getCaseProcedureById.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.caseProcedureById = action.payload;
+    },
+    [getCaseProcedureById.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [getCaseProcedureById.pending]: (state) => {
       state.loading = true;
     },
   },

@@ -2,7 +2,7 @@ import Modal from "react-bootstrap/Modal";
 import Body from "../../content/mainBody/Body";
 
 // eslint-disable-next-line react/prop-types
-function Modall({ lgShow, onhide }) {
+function Modall({ lgShow, onhide, caseProcedureById }) {
   const handleClose = (e) => {
     e.stopPropagation(); // Prevents events from reaching parent elements
     onhide(); // Close the modal
@@ -11,7 +11,13 @@ function Modall({ lgShow, onhide }) {
   const handleBackdropClick = (e) => {
     e.stopPropagation(); // Prevents events from reaching parent elements
   };
-
+  const dataToModal = caseProcedureById
+    ? {
+        ProcedureNameAr: caseProcedureById.ProcedureNameAr,
+        note: caseProcedureById.Note,
+        date: caseProcedureById.ProcedureDateString,
+      }
+    : null;
   return (
     <>
       <Modal
@@ -35,7 +41,7 @@ function Modall({ lgShow, onhide }) {
         ></Modal.Header>
 
         <Modal.Body>
-          <Body />
+          <Body dataToModal={dataToModal} />
         </Modal.Body>
       </Modal>
     </>
