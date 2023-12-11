@@ -35,7 +35,7 @@ function AccordionComponent() {
       </Accordion>
       <DropDownn />
 
-      <div style={{ margin: "20px" }}></div>
+      <div style={{ margin: "200px" }}></div>
 
       <Accordion defaultActiveKey="1">
         <AccordionContent
@@ -45,6 +45,7 @@ function AccordionComponent() {
           <Withness />
         </AccordionContent>
       </Accordion>
+      <div style={{ margin: "200px" }}></div>
     </>
   );
 }

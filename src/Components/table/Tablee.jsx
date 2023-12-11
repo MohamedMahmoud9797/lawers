@@ -13,10 +13,11 @@ import {
 import Loading from "../loading/Loading";
 
 const Tablee = () => {
-  const [viewOnlyMode, setViewOnlyMode] = useState(false);
   const [lgShow, setLgShow] = useState(false);
 
   const [selectedProcedure, setSelectedProcedure] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [isEditClicked, setIsEditClicked] = useState(false);
 
   const dispatch = useDispatch();
   const { allCaseProcedures, currentPage, loading, caseProcedureById } =
@@ -27,14 +28,13 @@ const Tablee = () => {
 
   const openModal = (procedure) => {
     setSelectedProcedure(procedure);
-    setViewOnlyMode(false); // Reset to default mode
     setLgShow(true);
+    setIsEditClicked(true);
   };
 
   const onhide = () => {
     setSelectedProcedure(null);
     setLgShow(false);
-    setViewOnlyMode(false); // Reset to default mode
   };
 
   // Create an array to hold multiple rows
@@ -63,16 +63,23 @@ const Tablee = () => {
           type="button"
           className="btn btn-transparent"
           data-bs-toggle="modal"
-          data-bs-target={`#exampleModal`}
+          data-bs-target={`#exampleModal${id}`}
+          onClick={() => openModal(item)}
         >
-          <FontAwesomeIcon icon={faPen} style={{ color: "#1f5120" }} />
+          <FontAwesomeIcon
+            icon={faPen}
+            style={{ color: "#1f5120" }}
+            onClick={() => {
+              dispatch(getCaseProcedureById(item.Id));
+              openModal(item);
+            }}
+          />
         </button>
       </td>
     </tr>
   ));
 
   // cases of model
-  console.log(caseProcedureById);
   return (
     <>
       {(loading && <Loading />) || ""}
@@ -93,7 +100,6 @@ const Tablee = () => {
       <Modall
         lgShow={lgShow}
         onhide={onhide}
-        viewOnlyMode={viewOnlyMode}
         caseProcedureById={selectedProcedure}
         casesOfModal={caseProcedureById}
       />

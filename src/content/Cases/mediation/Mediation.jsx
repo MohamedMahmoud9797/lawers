@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMainData } from "../../../Api/Store/proceduers.slice";
 
 // eslint-disable-next-line react/prop-types
-const Mediation = ({ updateFormValues }) => {
+const Mediation = ({ updateFormValues, isInputDisabled, date }) => {
   const [values, setValues] = useState({
     value1: "",
     value2: "",
-    dateValue: new Date(),
+    dateValue: date ? new Date(date) : new Date(),
   });
   const dispatch = useDispatch();
   const handleInputChange = (name) => (e) => {
@@ -52,6 +52,7 @@ const Mediation = ({ updateFormValues }) => {
       </option>
     );
   });
+  console.log(date);
   return (
     <>
       <Row className="align-items-center text-end  mb-2 ">
@@ -64,6 +65,7 @@ const Mediation = ({ updateFormValues }) => {
               className="form-select"
               onChange={handleInputChange("value1")}
               value={values.value1}
+              disabled={isInputDisabled}
             >
               <option>اختر</option>
               {optionsAcceptance}
@@ -77,6 +79,7 @@ const Mediation = ({ updateFormValues }) => {
             className="form-select"
             onChange={handleInputChange("value2")}
             value={values.value2}
+            disabled={isInputDisabled}
           >
             <option>اختر</option>
             {optionsMediationSettlementsList}
@@ -88,6 +91,7 @@ const Mediation = ({ updateFormValues }) => {
             className="w-100"
             selected={values.dateValue}
             onChange={handleDateChange}
+            isInputDisabled={isInputDisabled}
           />
         </Col>
       </Row>

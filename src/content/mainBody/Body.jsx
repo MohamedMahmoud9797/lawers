@@ -15,12 +15,13 @@ import {
 } from "../../Api/Store/proceduers.slice.js";
 
 // eslint-disable-next-line react/prop-types
-function Body({ dataToModal }) {
+function Body({ dataToModal, isFirstInputDisabled }) {
   const textAreaTitle = "تفاصيل الاجراء";
   const [selectValue, setSelectValue] = useState("");
   const [textareaValue, setTextareaValue] = useState("");
   const [formData, setFormData] = useState({});
   const [isInputDisabled, setIsInputDisabled] = useState(false);
+  const [date, setDate] = useState("");
 
   const dispatch = useDispatch();
 
@@ -65,23 +66,24 @@ function Body({ dataToModal }) {
   useEffect(() => {
     if (dataToModal) {
       setIsInputDisabled(true);
-
       // Example: Update form data based on dataToModal
+      // eslint-disable-next-line react/prop-types
       const { ProcedureNameAr, note, date } = dataToModal;
-
+      // eslint-disable-next-line react/prop-types
+      const trimedProcedureNameAr = ProcedureNameAr.trim();
       // Update the select value
-      setSelectValue(ProcedureNameAr);
+      setSelectValue(trimedProcedureNameAr);
       setTextareaValue(note);
-
-      // Update other form fields as needed
-      updateFormValues({ textarea: note });
+      setDate(date);
     }
   }, [dataToModal]);
+
   const SelectedComponent = componentMap[selectValue] || null;
   const renderedComponent = SelectedComponent && (
     <SelectedComponent
       updateFormValues={updateFormValues}
-      dataToModal={dataToModal}
+      isInputDisabled={isInputDisabled}
+      date={date}
     />
   );
 
@@ -97,7 +99,7 @@ function Body({ dataToModal }) {
                 aria-label="Default select example"
                 className="form-select"
                 onChange={handleSelectChange}
-                disabled={isInputDisabled}
+                disabled={isFirstInputDisabled}
                 value={selectValue}
               >
                 <option>اختر </option>
@@ -133,6 +135,7 @@ function Body({ dataToModal }) {
               className="mb-2"
               onChange={handleTextareaChange}
               value={textareaValue}
+              disabled={isInputDisabled}
             />
             <Button
               variant="outline-primary px-4"

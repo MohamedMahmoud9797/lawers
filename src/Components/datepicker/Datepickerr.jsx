@@ -2,16 +2,21 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../datepicker/datepicker.css";
-const Datepickerr = () => {
-  const [startDate, setStartDate] = useState(new Date());
-
+// eslint-disable-next-line react/prop-types
+const Datepickerr = ({ selected, onChange, isInputDisabled }) => {
+  const [startDate, setStartDate] = useState(selected || new Date());
+  const handleDateChange = (date) => {
+    setStartDate(date);
+    onChange && onChange(date);
+  };
   return (
     <DatePicker
       showIcon
       className="w-100 mt-2"
       selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      onChange={handleDateChange}
       dateFormat="yyyy/MM/dd"
+      disabled={isInputDisabled}
       icon={
         <svg
           fill="#2D9596"

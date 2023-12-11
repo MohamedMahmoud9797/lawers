@@ -8,25 +8,30 @@ const Withness = () => {
   return (
     <>
       <div className="mb-3 position-relative">
-        <button type="button" className="btn btn-danger position-absolute">
+        <button
+          type="button"
+          className="btn btn-danger position-absolute start-0"
+        >
           <FontAwesomeIcon icon={faTrash} />{" "}
         </button>
-        <br></br>
-        <br></br>
-        <br></br>
-        <label className="form-label">الاسم</label>
-        <input type="text" className="form-control" />
+        <h6 className="text-end"> الشاهد 1</h6>
       </div>
 
-      <div className="mt-4 d-flex justify-content-between mb-4">
+      <div className="d-flex justify-content-between flex-column mb-3">
+        <label className="form-label text-end mb-3 ">الاسم</label>
+        <input type="text" className="form-control text-end" />
+      </div>
+
+      <div className=" d-flex justify-content-between mb-3">
+        <label className="form-label  ">رقم الهاتف </label>
         <PhoneInput
           international
           countryCallingCodeEditable={false}
           defaultCountry="JO"
+          className="form-control "
         />
-
-        <label className="form-label me-2">العنوان</label>
-        <input type="text" className="form-control w-50" />
+        <label className="form-label ">العنوان</label>
+        <input type="text" className="form-control" />
       </div>
 
       <div className="d-flex justify-content-end me-5 ">
